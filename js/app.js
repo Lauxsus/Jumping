@@ -6,6 +6,8 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'ionMdInput','ngOpenFB'])
 
+test
+
 .run(function($ionicPlatform, ngFB) {
     $ionicPlatform.ready(function() {
 		
