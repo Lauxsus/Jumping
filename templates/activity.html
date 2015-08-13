@@ -1,0 +1,27 @@
+<ion-view view-title="Jumping News">
+    <ion-content ng-class="{expanded:isExpanded}" class="animate-fade-slide-in">
+	
+		<ion-item	collection-repeat="post in posts" style="border:none">        
+        <div class="item card-item">
+            <div ng-click="showPopup()" class="card"> <!--ui-sref="app.gallery"-->
+                <div class="item item-avatarINVALIDATO item-text-wrap">
+                    <!--<span class="avatar" style="background-image: url('img/tyrion.jpg');"></span> -->
+                    {{post.message | limitTo:99}}...
+                    <div class="card-footer text-right">
+                        <i class="icon ion-chatbubble positive-900"> {{!post.likes.data.length ? 0 : post.likes.data.length}}</i> 
+                        <i class="icon ion-heart assertive-900"></i> {{!post.comments.data.length ? 0 : post.comments.data.length}}
+                        <div class="pull-left">
+                            <i class="icon ion-clock"></i> {{post.created_time | date:"longDate"}}
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div> 				
+		</ion-item>	
+	
+	<!--<ion-item><button ng-click="loginFB()">Login </button> <button ng-click="revokeFB()">Revoke </button> 	</ion-item>		-->
+
+    </ion-content>
+</ion-view>
+
+
