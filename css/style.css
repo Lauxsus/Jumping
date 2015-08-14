@@ -93,3 +93,7 @@ p {
 	font-weight: 900 !important;
 	color: #0D47A1 !important;
 }
+
+.dialogExtend .popup{
+	width:50%
+}

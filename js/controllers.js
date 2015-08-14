@@ -215,6 +215,7 @@ angular.module('starter.controllers', ['ngOpenFB'])
 		  // An elaborate, custom popup
 		  var myPopup = $ionicPopup.show({
 			template: this.post.message,
+			cssClass: 'dialogExtend',
 			//title: 'Enter Wi-Fi Password',		
 			scope: $scope,
 			buttons: [
