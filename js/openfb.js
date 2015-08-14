@@ -48,8 +48,7 @@ var openFB = (function () {
     document.addEventListener("deviceready", function () {
         runningInCordova = true;
     }, false);
-	
-	alert('cordo:' + runningInCordova);
+		
 	//runningInCordova = true;
 
     /**
@@ -119,7 +118,6 @@ var openFB = (function () {
             startTime,
             scope = '',
             redirectURL = runningInCordova ? cordovaOAuthRedirectURL : oauthRedirectURL;
-			alert(redirectURL);
 
         if (!fbAppId) {
             return callback({status: 'unknown', error: 'Facebook App Id not set.'});

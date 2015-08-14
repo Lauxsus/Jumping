@@ -86,11 +86,13 @@ angular.module('starter.controllers', ['ngOpenFB'])
         }
     };
 	
-	alert('AppCtrl');
+	////////////////////////////////////////////////
+	//            FACEBOOK          ///////////////
+	//////////////////////////////////////////////
+	
 	ngFB.init({appId: '1613110712292812', accessToken: '1613110712292812|k9j4h1sAQDpNCwcuZXKp_I1SKu8'});
 	
-	$scope.loginFB = function() {	
-	//alert('3');	
+	$scope.loginFB = function() {		
                 ngFB.login({scope: 'email,publish_actions, user_likes'}).then( 
                     function(response) {
                         alert('Facebook login succeeded, got access token: ' + response.authResponse.accessToken);						
@@ -105,7 +107,7 @@ angular.module('starter.controllers', ['ngOpenFB'])
     }
 		
 	$scope.getInfoFB = function() {		
-	//alert('1');
+
                 ngFB.api({
                     method: 'GET',
                     path: '/150117738356335/posts/',
@@ -118,7 +120,7 @@ angular.module('starter.controllers', ['ngOpenFB'])
                     function(posts) {                        
                         $scope.posts = posts.data;						
 						//console.log(JSON.stringify($scope.posts));
-						//alert('2');
+						
                     },
                     errorHandler);
     }
@@ -136,7 +138,27 @@ angular.module('starter.controllers', ['ngOpenFB'])
                 alert('Err: ' + error.message);
 				//$scope.loginFB();
 				
-     }	
+     }
+	 
+	////////////////////////////////////////////////
+	//            NOTIFICHE         ///////////////
+	//////////////////////////////////////////////
+	/*
+	$scope.registerWithPushService = function() {
+		$ionicPush.register({
+		  canShowAlert: true, // Can pushes show an alert on your screen?
+		  canSetBadge: true, // Can pushes update app icon badges?
+		  canPlaySound: true, // Can notifications play a sound?
+		  canRunActionsOnWake: true, // Can run actions outside the app,
+		  onNotification: function(notification) {
+			// Handle push notifications here
+			console.log(notification);
+			return true;
+		  }
+		});
+	  };
+
+	$scope.registerWithPushService();	*/  
 
 })
 
@@ -228,7 +250,6 @@ angular.module('starter.controllers', ['ngOpenFB'])
     // Activate ink for controller
     ionicMaterialInk.displayEffect();
 	
-	alert('ACTIVITY');
 	
 	/*alert(JSON.stringify(ngFB.getLoginStatus().$$state.value.status ));
 	if (ngFB.getLoginStatus().$$state.value.status =="unknown"){

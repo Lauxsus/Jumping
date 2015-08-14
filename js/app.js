@@ -9,9 +9,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
 .run(function($ionicPlatform, ngFB) {
     $ionicPlatform.ready(function() {
 		
-				
-		alert('RUN');
-		//ngFB.init({appId: '1613110712292812'});		
+		$cordovaSplashscreen.hide();		
 			
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
