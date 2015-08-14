@@ -48,6 +48,9 @@ var openFB = (function () {
     document.addEventListener("deviceready", function () {
         runningInCordova = true;
     }, false);
+	
+	alert('cordo:' + runningInCordova);
+	//runningInCordova = true;
 
     /**
      * Initialize the OpenFB module. You must use this function and initialize the module with an appId before you can
@@ -116,6 +119,7 @@ var openFB = (function () {
             startTime,
             scope = '',
             redirectURL = runningInCordova ? cordovaOAuthRedirectURL : oauthRedirectURL;
+			alert(redirectURL);
 
         if (!fbAppId) {
             return callback({status: 'unknown', error: 'Facebook App Id not set.'});

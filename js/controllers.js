@@ -3,7 +3,7 @@
 
 angular.module('starter.controllers', ['ngOpenFB'])
 
-.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout, ngFB) {
     // Form data for the login modal
     $scope.loginData = {};
     $scope.isExpanded = false;
@@ -85,6 +85,58 @@ angular.module('starter.controllers', ['ngOpenFB'])
             fabs[0].remove();
         }
     };
+	
+	alert('AppCtrl');
+	ngFB.init({appId: '1613110712292812'});
+	
+	$scope.loginFB = function() {	
+	//alert('3');	
+                ngFB.login({scope: 'email,publish_actions, user_likes'}).then( 
+                    function(response) {
+                        alert('Facebook login succeeded, got access token: ' + response.authResponse.accessToken);						
+						$scope.fbtoken=response.authResponse.accessToken;
+						$scope.getInfoFB();
+                    },
+                    function(error) {
+                        alert('Facebook login failed: ' + JSON.stringify(error));
+                    }
+					
+					);
+    }
+		
+	$scope.getInfoFB = function() {		
+	//alert('1');
+                ngFB.api({
+                    method: 'GET',
+                    path: '/150117738356335/posts/',
+					params: {
+						fields: 'message,created_time,comments,likes'
+						,limit: '10'
+						//,access_token: $scope.fbtoken
+					}	
+                }).then(
+                    function(posts) {                        
+                        $scope.posts = posts.data;						
+						//console.log(JSON.stringify($scope.posts));
+						//alert('2');
+                    },
+                    errorHandler);
+    }
+	
+	
+	$scope.revokeFB = function() {				
+                ngFB.revokePermissions().then(
+                    function() {
+                        alert('Permissions revoked');
+                    },
+                    errorHandler);
+    }
+	
+	 function errorHandler(error) {				
+                alert('Err: ' + error.message);
+				//$scope.loginFB();
+				
+     }	
 
 })
 
@@ -140,63 +192,15 @@ angular.module('starter.controllers', ['ngOpenFB'])
     ionicMaterialInk.displayEffect();
 })
 
-.controller('ActivityCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, ngFB, $ionicPopup) {
+.controller('ActivityCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicPopup, ngFB) {
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
     $scope.isExpanded = true;
     $scope.$parent.setExpanded(true);
     $scope.$parent.setHeaderFab('right');
-	
-	
-	ngFB.init({appId: '1613110712292812'});
+		
 	//console.log(JSON.stringify( ngFB);
 	
-	$scope.loginFB = function() {		
-                ngFB.login({scope: 'email,publish_actions, user_likes'}).then( 
-                    function(response) {
-                        //alert('Facebook login succeeded, got access token: ' + response.authResponse.accessToken);						
-						$scope.fbtoken=response.authResponse.accessToken;
-						$scope.getInfoFB();
-                    },
-                    function(error) {
-                        alert('Facebook login failed: ' + JSON.stringify(error));
-                    }
-					
-					);
-    }
-	
-		
-	$scope.getInfoFB = function() {		
-                ngFB.api({
-                    method: 'GET',
-                    path: '/150117738356335/posts/',
-					params: {
-						fields: 'message,created_time,comments,likes'
-						,limit: '10'
-						//,access_token: $scope.fbtoken
-					}	
-                }).then(
-                    function(posts) {                        
-                        $scope.posts = posts.data;						
-						//console.log(JSON.stringify($scope.posts));
-                    },
-                    errorHandler);
-    }
-	
-	
-	$scope.revokeFB = function() {				
-                ngFB.revokePermissions().then(
-                    function() {
-                        alert('Permissions revoked');
-                    },
-                    errorHandler);
-    }
-	
-	 function errorHandler(error) {				
-                //alert('Err: ' + error.message);
-				$scope.loginFB();
-				
-     }	
 
     $timeout(function() {
         ionicMaterialMotion.fadeSlideIn({
@@ -206,27 +210,31 @@ angular.module('starter.controllers', ['ngOpenFB'])
 	
 
 	 $scope.showPopup = function() {
-	  $scope.data = {}
+		  $scope.data = {}
 
-	  // An elaborate, custom popup
-	  var myPopup = $ionicPopup.show({
-		template: this.post.message,
-		//title: 'Enter Wi-Fi Password',		
-		scope: $scope,
-		buttons: [
-		  { text: 'Chiudi',
-			type: 'button-positive-900' }
-		]
-	  });
+		  // An elaborate, custom popup
+		  var myPopup = $ionicPopup.show({
+			template: this.post.message,
+			//title: 'Enter Wi-Fi Password',		
+			scope: $scope,
+			buttons: [
+			  { text: 'Chiudi',
+				type: 'button-positive-900' }
+			]
+		  });
 	};
-	  
-
+	  	  
     // Activate ink for controller
     ionicMaterialInk.displayEffect();
 	
-	//$scope.loginFB();
+	alert('ACTIVITY');
 	
-	$scope.getInfoFB();	
+	alert(JSON.stringify(ngFB.getLoginStatus().$$state.value.status ));
+	if (ngFB.getLoginStatus().$$state.value.status =="unknown"){
+			$scope.$parent.loginFB();
+	}else{	
+		$scope.$parent.getInfoFB();		
+	}	
 	
 		
 })

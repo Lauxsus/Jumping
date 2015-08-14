@@ -9,9 +9,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
 .run(function($ionicPlatform, ngFB) {
     $ionicPlatform.ready(function() {
 		
-		runningInCordova = true;
-		ngFB.init({appId: '1613110712292812'});
-		
+				
+		alert('RUN');
+		//ngFB.init({appId: '1613110712292812'});		
+			
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
         if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -20,7 +21,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
         if (window.StatusBar) {
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
-        }			
+        }
+		
     });
 })
 
