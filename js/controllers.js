@@ -87,7 +87,7 @@ angular.module('starter.controllers', ['ngOpenFB'])
     };
 	
 	alert('AppCtrl');
-	ngFB.init({appId: '1613110712292812'});
+	ngFB.init({appId: '1613110712292812', accessToken: '1613110712292812|k9j4h1sAQDpNCwcuZXKp_I1SKu8'});
 	
 	$scope.loginFB = function() {	
 	//alert('3');	
@@ -229,12 +229,12 @@ angular.module('starter.controllers', ['ngOpenFB'])
 	
 	alert('ACTIVITY');
 	
-	alert(JSON.stringify(ngFB.getLoginStatus().$$state.value.status ));
+	/*alert(JSON.stringify(ngFB.getLoginStatus().$$state.value.status ));
 	if (ngFB.getLoginStatus().$$state.value.status =="unknown"){
 			$scope.$parent.loginFB();
-	}else{	
-		$scope.$parent.getInfoFB();		
-	}	
+	}	*/
+	$scope.$parent.getInfoFB();		
+	
 	
 		
 })
