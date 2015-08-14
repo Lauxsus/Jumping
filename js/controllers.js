@@ -3,7 +3,7 @@
 
 angular.module('starter.controllers', ['ngOpenFB'])
 
-.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout, ngFB) {
+.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout, ngFB, $ionicPush) {
     // Form data for the login modal
     $scope.loginData = {};
     $scope.isExpanded = false;
@@ -143,7 +143,7 @@ angular.module('starter.controllers', ['ngOpenFB'])
 	////////////////////////////////////////////////
 	//            NOTIFICHE         ///////////////
 	//////////////////////////////////////////////
-	/*
+	
 	$scope.registerWithPushService = function() {
 		$ionicPush.register({
 		  canShowAlert: true, // Can pushes show an alert on your screen?
@@ -158,7 +158,7 @@ angular.module('starter.controllers', ['ngOpenFB'])
 		});
 	  };
 
-	$scope.registerWithPushService();	*/  
+	//$scope.registerWithPushService();	
 
 })
 
