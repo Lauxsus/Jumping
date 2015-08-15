@@ -156,7 +156,7 @@ angular.module('starter.controllers', ['ngOpenFB'])
 	
 	$rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
 		alert('Success: ' + data.token);
-		console.log('Token: ',data.token, data.platform)
+		console.log('Token: ',data.token, data.platform)		
 		$scope.token=data.token;
 	})
 	
