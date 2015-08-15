@@ -3,7 +3,7 @@
 
 angular.module('starter.controllers', ['ngOpenFB'])
 
-.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout, ngFB, $ionicPush) {
+.controller('AppCtrl', function($scope,$rootScope, $ionicModal, $ionicPopover, $timeout, ngFB, $ionicPush) {
     // Form data for the login modal
     $scope.loginData = {};
     $scope.isExpanded = false;
@@ -140,11 +140,48 @@ angular.module('starter.controllers', ['ngOpenFB'])
 				
      }
 	 
+
+})
+
+.controller('LoginCtrl', function($scope,$rootScope, $timeout, $stateParams, ionicMaterialInk, $ionicUser, $ionicPush) {
+    $scope.$parent.clearFabs();
+    $timeout(function() {
+        $scope.$parent.hideHeader();
+    }, 0);
+    ionicMaterialInk.displayEffect();
+	
 	////////////////////////////////////////////////
 	//            NOTIFICHE         ///////////////
 	//////////////////////////////////////////////
 	
-	$scope.registerWithPushService = function() {
+	$rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
+		alert('Success: ' + data.token);
+		console.log('Token: ',data.token, data.platform)
+		$scope.token=data.token;
+	})
+	
+	$scope.identifyUser = function() {
+
+	  var user =  $ionicUser.get();
+	  
+	  if (!user.user_id) {
+		  user.user_id = $ionicUser.generateGUID();
+	  } 
+	  
+	
+		angular.extend(user,{
+			name: 'ciro',
+			bio: 'dev'
+		});
+		
+		$ionicUser.identify(user).then(function(){
+			$scope.identified = true;
+			console.log('nome: '+user.name+'-----ID: '+user.user_id);
+		});
+	}	
+		
+	
+	$scope.PushRegister = function() {
 		$ionicPush.register({
 		  canShowAlert: true, // Can pushes show an alert on your screen?
 		  canSetBadge: true, // Can pushes update app icon badges?
@@ -157,17 +194,6 @@ angular.module('starter.controllers', ['ngOpenFB'])
 		  }
 		});
 	  };
-
-	//$scope.registerWithPushService();	
-
-})
-
-.controller('LoginCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk) {
-    $scope.$parent.clearFabs();
-    $timeout(function() {
-        $scope.$parent.hideHeader();
-    }, 0);
-    ionicMaterialInk.displayEffect();
 })
 
 .controller('FriendsCtrl', function($scope, $stateParams, $timeout, ionicMaterialInk, ionicMaterialMotion) {

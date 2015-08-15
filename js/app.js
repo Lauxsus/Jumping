@@ -9,7 +9,7 @@ angular.module('starter', ['ionic','ionic.service.core','ionic.service.push','ng
 .run(function($ionicPlatform, ngFB) {
     $ionicPlatform.ready(function() {
 		
-		$cordovaSplashscreen.hide();		
+		//$cordovaSplashscreen.hide();		
 			
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -25,6 +25,7 @@ angular.module('starter', ['ionic','ionic.service.core','ionic.service.push','ng
 })
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+	
 
     // Turn off caching for demo simplicity's sake
     $ionicConfigProvider.views.maxCache(0);

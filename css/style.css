@@ -98,3 +98,12 @@ p {
 	width:85%
 }
 
+.card-item.item:first-child{
+	padding-top:0;
+}
+
+.activityMargin{
+	margin-top:15px
+}
+
+
