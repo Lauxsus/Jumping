@@ -138,8 +138,8 @@ angular.module('starter.controllers', ['ngOpenFB'])
                 alert('Err: ' + error.message);
 				//$scope.loginFB();
 				
-     }
-	 
+     }	
+		 	 
 
 })
 
@@ -153,32 +153,34 @@ angular.module('starter.controllers', ['ngOpenFB'])
 	////////////////////////////////////////////////
 	//            NOTIFICHE         ///////////////
 	//////////////////////////////////////////////
-	
+		
 	$rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
 		alert('Success: ' + data.token);
 		console.log('Token: ',data.token, data.platform)		
 		$scope.token=data.token;
+		window.localStorage.setItem('DEVID', data.token);
 	})
 	
 	$scope.identifyUser = function() {
 
-	  var user =  $ionicUser.get();
-	  
-	  if (!user.user_id) {
+		var user =  $ionicUser.get();
+
+		if (!user.user_id) {
 		  user.user_id = $ionicUser.generateGUID();
-	  } 
-	  
-	
+		} 
+
+
 		angular.extend(user,{
-			name: 'ciro',
-			bio: 'dev'
+		name: 'ciro',
+		bio: 'dev'
 		});
-		
+			
+
 		$ionicUser.identify(user).then(function(){
-			$scope.identified = true;
-			console.log('nome: '+user.name+'-----ID: '+user.user_id);
+		$scope.identified = true;
+		console.log('nome: '+user.name+'-----ID: '+user.user_id);
 		});
-	}	
+	}		
 		
 	
 	$scope.PushRegister = function() {
@@ -194,6 +196,18 @@ angular.module('starter.controllers', ['ngOpenFB'])
 		  }
 		});
 	  };
+	  
+	  
+	alert(window.localStorage.getItem('DEVID') ); 
+	
+	if (window.localStorage.getItem('DEVID') ) {
+		$scope.token =window.localStorage.getItem('DEVID');
+	}else{	
+		$scope.identifyUser();
+		$scope.PushRegister();
+	}	
+		
+		
 })
 
 .controller('FriendsCtrl', function($scope, $stateParams, $timeout, ionicMaterialInk, ionicMaterialMotion) {
