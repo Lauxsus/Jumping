@@ -8,9 +8,57 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
 
 .run(function($ionicPlatform, ngFB) {
     $ionicPlatform.ready(function() {
+									
+			/*var now  = new Date().getTime(),
+			one_min_from_now = new Date(now + 60*1000); */
+					
 		
-		$cordovaSplashscreen.hide();		
+		//ABILITIAMO L'APP AL FUNZIONAMENTO IN BACKGROUND
+		
+		// Android customization		
+		// Enable background mode		
+		cordova.plugins.backgroundMode.configure({ silent: true });
+		cordova.plugins.backgroundMode.enable();
+		
+		cordova.plugins.backgroundMode.ondeactivate = function() {			
 			
+			cordova.plugins.backgroundMode.configure({ silent: true });
+			
+			var lastId = new Object();
+			
+			
+			//preleviamo l'ultimo post da FB
+			ngFB.init({appId: '1613110712292812', accessToken: '1613110712292812|k9j4h1sAQDpNCwcuZXKp_I1SKu8'});			
+			
+			ngFB.api({
+				method: 'GET',
+				path: '/150117738356335/posts/',
+				params: {
+					fields: 'id'
+					,limit: '1'						
+				}	
+			}).then(
+				function(posts) { 				
+					lastId = posts.data[0].id;		
+					
+					//Notifichiamo che c'è un nuovo post
+					
+					if (lastId != window.localStorage.getItem('LASTPOSTID') ) {
+						window.localStorage.setItem('LASTPOSTID',lastId);
+					
+						cordova.plugins.notification.local.schedule({
+							id: 10,
+							title: "Ci sono novità!",
+							text: "bla bla bla"							
+						});
+					}
+			});
+					
+		};		
+		
+								
+		navigator.splashscreen.hide();	
+		
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
         if (window.cordova && window.cordova.plugins.Keyboard) {

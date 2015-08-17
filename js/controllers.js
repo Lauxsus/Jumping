@@ -92,6 +92,7 @@ angular.module('starter.controllers', ['ngOpenFB'])
 	
 	ngFB.init({appId: '1613110712292812', accessToken: '1613110712292812|k9j4h1sAQDpNCwcuZXKp_I1SKu8'});
 	
+	/*
 	$scope.loginFB = function() {		
                 ngFB.login({scope: 'email,publish_actions, user_likes'}).then( 
                     function(response) {
@@ -104,7 +105,7 @@ angular.module('starter.controllers', ['ngOpenFB'])
                     }
 					
 					);
-    }
+    }*/
 		
 	$scope.getInfoFB = function() {		
 
@@ -113,12 +114,11 @@ angular.module('starter.controllers', ['ngOpenFB'])
                     path: '/150117738356335/posts/',
 					params: {
 						fields: 'message,created_time,comments,likes'
-						,limit: '10'
-						//,access_token: $scope.fbtoken
+						,limit: '10'						
 					}	
                 }).then(
                     function(posts) {                        
-                        $scope.posts = posts.data;						
+                        $scope.posts = posts.data;													
 						//console.log(JSON.stringify($scope.posts));
 						
                     },
@@ -140,25 +140,6 @@ angular.module('starter.controllers', ['ngOpenFB'])
 				
      }
 	 
-	////////////////////////////////////////////////
-	//            NOTIFICHE         ///////////////
-	//////////////////////////////////////////////
-	/*
-	$scope.registerWithPushService = function() {
-		$ionicPush.register({
-		  canShowAlert: true, // Can pushes show an alert on your screen?
-		  canSetBadge: true, // Can pushes update app icon badges?
-		  canPlaySound: true, // Can notifications play a sound?
-		  canRunActionsOnWake: true, // Can run actions outside the app,
-		  onNotification: function(notification) {
-			// Handle push notifications here
-			console.log(notification);
-			return true;
-		  }
-		});
-	  };
-
-	$scope.registerWithPushService();	*/  
 
 })
 
