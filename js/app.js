@@ -6,19 +6,27 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'ionMdInput','ngOpenFB'])
 
-.run(function($ionicPlatform, ngFB) {
+.run(function($ionicPlatform, ngFB, $timeout) {
     $ionicPlatform.ready(function() {														
 		
 		//ABILITIAMO L'APP AL FUNZIONAMENTO IN BACKGROUND
 				
 		// Enable background mode		
-		cordova.plugins.backgroundMode.configure({ silent: true });
+		
 		cordova.plugins.backgroundMode.enable();
+		
+				
+		//alert(window.localStorage.getItem('LASTPOSTID'));
+		cordova.plugins.backgroundMode.ondeactivate = function() {			
+			cordova.plugins.notification.local.clearAll(function() {
+				console.log("cleared");
+			}, this);
+		}	
 		
 		cordova.plugins.backgroundMode.onactivate = function() {			
 			
 			cordova.plugins.backgroundMode.configure({ silent: true });
-			
+						
 			 var delayedUpdate = function() {
                 $timeout(function() {                   
 					
@@ -29,7 +37,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
 					
 					ngFB.api({
 						method: 'GET',
-						path: '/150117738356335/posts/',
+						path: '/150117738356335/posts/',					
 						params: {
 							fields: 'id,message'
 							,limit: '1'						
@@ -37,9 +45,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
 					}).then(
 						function(posts) { 				
 							lastId = posts.data[0].id;
-							lastMsg = posts.data[0].message;							
+							lastMsg = posts.data[0].message;	
+
+							//cordova.plugins.notification.local.schedule({title: lastid,text:  window.localStorage.getItem('LASTPOSTID'),id:2	});
+							//cordova.plugins.notification.local.schedule({title: "local",text: ,id:2	});
 							
 							//Notifichiamo che c'è un nuovo post
+							//window.localStorage.setItem('LASTPOSTID','749846598546');
 							
 							if (lastId != window.localStorage.getItem('LASTPOSTID') ) {
 								window.localStorage.setItem('LASTPOSTID',lastId);
@@ -53,11 +65,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
 					});
 					
 					//Richiamiamo la funzione ciclimamente ogni 30 minuti
-                    delayedUpdate();
-                }, 30*60*1000);
+                    delayedUpdate();         
+				}, 10*1000);
             };
-					
-		};		
+				
+			delayedUpdate(); 
+		}		
 		
 								
 		navigator.splashscreen.hide();	

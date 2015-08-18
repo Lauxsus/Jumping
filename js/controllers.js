@@ -240,8 +240,6 @@ angular.module('starter.controllers', ['ngOpenFB'])
 	}	*/
 	$scope.$parent.getInfoFB();		
 	
-	
-		
 })
 
 .controller('GalleryCtrl', function($scope, $stateParams, $timeout, ionicMaterialInk, ionicMaterialMotion) {
