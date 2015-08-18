@@ -14,7 +14,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
 		// Enable background mode		
 		
 		cordova.plugins.backgroundMode.enable();
-		
+		cordova.plugins.backgroundMode.configure({ silent: true });
 				
 		//alert(window.localStorage.getItem('LASTPOSTID'));
 		cordova.plugins.backgroundMode.ondeactivate = function() {			
@@ -37,7 +37,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
 					
 					ngFB.api({
 						method: 'GET',
-						path: '/150117738356335/posts/',					
+						//path: '/150117738356335/posts/',					
+						path: '/342778329168021/posts/',					
 						params: {
 							fields: 'id,message'
 							,limit: '1'						
@@ -55,12 +56,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
 							
 							if (lastId != window.localStorage.getItem('LASTPOSTID') ) {
 								window.localStorage.setItem('LASTPOSTID',lastId);
-							
+								
+																
 								cordova.plugins.notification.local.schedule({
 									id: 1,
 									title: "Ci sono novità alla Jumping!",
 									text: lastMsg							
 								});
+								
+								cordova.plugins.notification.local.on("trigger", function(notification) {
+									navigator.vibrate(1000);
+								});
+								
 							}
 					});
 					
