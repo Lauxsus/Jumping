@@ -143,12 +143,6 @@ angular.module('starter.controllers', ['ngOpenFB'])
 
 })
 
-.controller('LoginCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk) {
-     }	
-		 	 
-
-})
-
 .controller('LoginCtrl', function($scope,$rootScope, $timeout, $stateParams, ionicMaterialInk) {
     $scope.$parent.clearFabs();
     $timeout(function() {
