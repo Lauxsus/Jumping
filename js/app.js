@@ -7,52 +7,55 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'ionMdInput','ngOpenFB'])
 
 .run(function($ionicPlatform, ngFB) {
-    $ionicPlatform.ready(function() {
-									
-		/*var now  = new Date().getTime(),
-		one_min_from_now = new Date(now + 60*1000); */
-					
+    $ionicPlatform.ready(function() {														
 		
 		//ABILITIAMO L'APP AL FUNZIONAMENTO IN BACKGROUND
-		
-		// Android customization		
+				
 		// Enable background mode		
 		cordova.plugins.backgroundMode.configure({ silent: true });
 		cordova.plugins.backgroundMode.enable();
 		
-		cordova.plugins.backgroundMode.ondeactivate = function() {			
+		cordova.plugins.backgroundMode.onactivate = function() {			
 			
 			cordova.plugins.backgroundMode.configure({ silent: true });
 			
-			var lastId = new Object();
-			
-			
-			//preleviamo l'ultimo post da FB
-			ngFB.init({appId: '1613110712292812', accessToken: '1613110712292812|k9j4h1sAQDpNCwcuZXKp_I1SKu8'});			
-			
-			ngFB.api({
-				method: 'GET',
-				path: '/150117738356335/posts/',
-				params: {
-					fields: 'id'
-					,limit: '1'						
-				}	
-			}).then(
-				function(posts) { 				
-					lastId = posts.data[0].id;		
+			 var delayedUpdate = function() {
+                $timeout(function() {                   
 					
-					//Notifichiamo che c'è un nuovo post
+					//preleviamo l'ultimo post da FB
+					ngFB.init({appId: '1613110712292812', accessToken: '1613110712292812|k9j4h1sAQDpNCwcuZXKp_I1SKu8'});
 					
-					if (lastId != window.localStorage.getItem('LASTPOSTID') ) {
-						window.localStorage.setItem('LASTPOSTID',lastId);
+					var lastId = new Object();
 					
-						cordova.plugins.notification.local.schedule({
-							id: 10,
-							title: "Ci sono novità!",
-							text: "bla bla bla"							
-						});
-					}
-			});
+					ngFB.api({
+						method: 'GET',
+						path: '/150117738356335/posts/',
+						params: {
+							fields: 'id,message'
+							,limit: '1'						
+						}	
+					}).then(
+						function(posts) { 				
+							lastId = posts.data[0].id;
+							lastMsg = posts.data[0].message;							
+							
+							//Notifichiamo che c'è un nuovo post
+							
+							if (lastId != window.localStorage.getItem('LASTPOSTID') ) {
+								window.localStorage.setItem('LASTPOSTID',lastId);
+							
+								cordova.plugins.notification.local.schedule({
+									id: 1,
+									title: "Ci sono novità alla Jumping!",
+									text: lastMsg							
+								});
+							}
+					});
+					
+					//Richiamiamo la funzione ciclimamente ogni 30 minuti
+                    delayedUpdate();
+                }, 30*60*1000);
+            };
 					
 		};		
 		
