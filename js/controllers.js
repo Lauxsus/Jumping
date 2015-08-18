@@ -3,7 +3,7 @@
 
 angular.module('starter.controllers', ['ngOpenFB'])
 
-.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout, ngFB) {
+.controller('AppCtrl', function($scope,$rootScope, $ionicModal, $ionicPopover, $timeout, ngFB) {
     // Form data for the login modal
     $scope.loginData = {};
     $scope.isExpanded = false;
@@ -144,11 +144,20 @@ angular.module('starter.controllers', ['ngOpenFB'])
 })
 
 .controller('LoginCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk) {
+     }	
+		 	 
+
+})
+
+.controller('LoginCtrl', function($scope,$rootScope, $timeout, $stateParams, ionicMaterialInk) {
     $scope.$parent.clearFabs();
     $timeout(function() {
         $scope.$parent.hideHeader();
     }, 0);
     ionicMaterialInk.displayEffect();
+
+
+
 })
 
 .controller('FriendsCtrl', function($scope, $stateParams, $timeout, ionicMaterialInk, ionicMaterialMotion) {

@@ -9,8 +9,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
 .run(function($ionicPlatform, ngFB) {
     $ionicPlatform.ready(function() {
 									
-			/*var now  = new Date().getTime(),
-			one_min_from_now = new Date(now + 60*1000); */
+		/*var now  = new Date().getTime(),
+		one_min_from_now = new Date(now + 60*1000); */
 					
 		
 		//ABILITIAMO L'APP AL FUNZIONAMENTO IN BACKGROUND

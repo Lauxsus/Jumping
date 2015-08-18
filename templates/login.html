@@ -6,8 +6,17 @@
                 <h1>Thronester</h1>
             </div>
         </div>
+		{{token}}
+		<button class="button button-block button-dark" ng-click="identifyUser()">
+			Register with Push Service
+		</button>
+		
+		<button class="button button-block button-dark" ng-if ="identified" ng-click="PushRegister()"> <!--registerWithPushService()-->
+			Register
+		</button>
+		
         <div class="list">
-            <ion-md-input placeholder="Username" highlight-color="balanced" type="text"></ion-md-input>
+            <ion-md-input placeholder="Username" highlight-color="balanced" type="text" ></ion-md-input>
             <ion-md-input placeholder="Password" highlight-color="energized" type="password"></ion-md-input>
         </div>
         <div class="padding">
@@ -18,5 +27,6 @@
             <button class="button button-small button-border icon-left ion-social-twitter button-calm-900">Twitter</button>
             <button class="button button-small button-border icon-left ion-social-facebook button-positive-900" ng-click="loginFB()">Facebook</button>
         </div>
+				
     </ion-content>
 </ion-view>
