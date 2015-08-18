@@ -233,8 +233,7 @@ angular.module('starter.controllers', ['ngOpenFB'])
 	  	  
     // Activate ink for controller
     ionicMaterialInk.displayEffect();
-	
-	
+		
 	/*alert(JSON.stringify(ngFB.getLoginStatus().$$state.value.status ));
 	if (ngFB.getLoginStatus().$$state.value.status =="unknown"){
 			$scope.$parent.loginFB();
