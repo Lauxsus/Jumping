@@ -6,80 +6,31 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'ionMdInput','ngOpenFB'])
 
-.run(function($ionicPlatform, ngFB, $timeout) {
-    $ionicPlatform.ready(function() {														
-		
-		//ABILITIAMO L'APP AL FUNZIONAMENTO IN BACKGROUND
-				
+.run(function($ionicPlatform, ngFB, $timeout, backgrdNotification) {
+	
+	$ionicPlatform.APPFBID = '1613110712292812';
+	$ionicPlatform.STATICTOKEN = '1613110712292812|k9j4h1sAQDpNCwcuZXKp_I1SKu8';
+	$ionicPlatform.PAGEID = '342778329168021'; //150117738356335
+	$ionicPlatform.TIMEREFRESH = 10; //min * 60
+	
+    $ionicPlatform.ready(function() {
+						
+		//ABILITIAMO L'APP AL FUNZIONAMENTO IN BACKGROUND				
 		// Enable background mode		
 		
 		cordova.plugins.backgroundMode.enable();
-		cordova.plugins.backgroundMode.configure({ silent: true });
-				
-		//alert(window.localStorage.getItem('LASTPOSTID'));
-		cordova.plugins.backgroundMode.ondeactivate = function() {			
-			cordova.plugins.notification.local.clearAll(function() {
-				console.log("cleared");
-			}, this);
-		}	
+		cordova.plugins.backgroundMode.configure({ silent: true });				
 		
-		cordova.plugins.backgroundMode.onactivate = function() {			
-			
-			cordova.plugins.backgroundMode.configure({ silent: true });
-						
-			 var delayedUpdate = function() {
-                $timeout(function() {                   
-					
-					//preleviamo l'ultimo post da FB
-					ngFB.init({appId: '1613110712292812', accessToken: '1613110712292812|k9j4h1sAQDpNCwcuZXKp_I1SKu8'});
-					
-					var lastId = new Object();
-					
-					ngFB.api({
-						method: 'GET',
-						//path: '/150117738356335/posts/',					
-						path: '/342778329168021/posts/',					
-						params: {
-							fields: 'id,message'
-							,limit: '1'						
-						}	
-					}).then(
-						function(posts) { 				
-							lastId = posts.data[0].id;
-							lastMsg = posts.data[0].message;	
+		//check nuove notizie
+		backgrdNotification.backgrdCheckOnFb();
+		
+		//Pulisco le notifiche all'apertura
+		backgrdNotification.backgrdClearNot();	
 
-							//cordova.plugins.notification.local.schedule({title: lastid,text:  window.localStorage.getItem('LASTPOSTID'),id:2	});
-							//cordova.plugins.notification.local.schedule({title: "local",text: ,id:2	});
-							
-							//Notifichiamo che c'è un nuovo post
-							//window.localStorage.setItem('LASTPOSTID','749846598546');
-							
-							if (lastId != window.localStorage.getItem('LASTPOSTID') ) {
-								window.localStorage.setItem('LASTPOSTID',lastId);
-								
-																
-								cordova.plugins.notification.local.schedule({
-									id: 1,
-									title: "Ci sono novità alla Jumping!",
-									text: lastMsg							
-								});
-								
-								cordova.plugins.notification.local.on("trigger", function(notification) {
-									navigator.vibrate(1000);
-								});
-								
-							}
-					});
+		//Chiamo subito il metodo per issue primo avvio
+		cordova.plugins.backgroundMode.onactivate();
 					
-					//Richiamiamo la funzione ciclimamente ogni 30 minuti
-                    delayedUpdate();         
-				}, 10*1000);
-            };
-				
-			delayedUpdate(); 
-		}		
-		
-								
+		//Nascondo splash screen
 		navigator.splashscreen.hide();	
 		
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -93,6 +44,75 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
         }
 		
     });
+})
+
+.service('backgrdNotification', function($ionicPlatform, $timeout, ngFB) {
+  
+    this.backgrdClearNot = function() {		
+		cordova.plugins.backgroundMode.ondeactivate = function() {			
+				cordova.plugins.notification.local.clearAll(function() {
+					console.log("cleared");
+					//alert('ciao');
+				}, this);
+			}
+        }
+ 
+    this.backgrdCheckOnFb = function() {
+		
+            cordova.plugins.backgroundMode.onactivate = function() {						
+				cordova.plugins.backgroundMode.configure({ silent: true });
+				cordova.plugins.notification.local.schedule({title: "test!",text: "debug", led: "E8D032"});
+							
+				 var delayedUpdate = function() {			 					
+					$timeout(function() {                   
+						
+						//preleviamo l'ultimo post da FB
+						ngFB.init({appId: $ionicPlatform.APPFBID, accessToken: $ionicPlatform.STATICTOKEN});
+						
+						var lastId = new Object();
+						
+						ngFB.api({
+							method: 'GET',											
+							path: '/'+ $ionicPlatform.PAGEID +'/posts/',					
+							params: {
+								fields: 'id,message'
+								,limit: '1'						
+							}	
+						}).then(
+							function(posts) { 				
+								lastId = posts.data[0].id;
+								lastMsg = posts.data[0].message;	
+
+								//Notifichiamo che c'è un nuovo post
+								//window.localStorage.setItem('LASTPOSTID','749846598546');
+								
+								if (lastId != window.localStorage.getItem('LASTPOSTID') ) {
+									window.localStorage.setItem('LASTPOSTID',lastId);
+									
+																	
+									cordova.plugins.notification.local.schedule({
+										id: 1,
+										title: "Ci sono novità alla Jumping!",
+										text: lastMsg,
+										led: "E8D032"
+									});
+									
+									cordova.plugins.notification.local.on("trigger", function(notification) {
+										navigator.vibrate(1000);
+									});
+									
+								}
+						});
+						
+						//Richiamiamo la funzione ciclimamente ogni 30 minuti
+						this.delayedUpdate();         
+					}, $ionicPlatform.TIMEREFRESH*1000);
+				};
+					
+				delayedUpdate(); 
+			}
+        }
+  
 })
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {

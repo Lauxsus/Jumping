@@ -90,6 +90,7 @@ angular.module('starter.controllers', ['ngOpenFB'])
 	//            FACEBOOK          ///////////////
 	//////////////////////////////////////////////
 	
+	
 	ngFB.init({appId: '1613110712292812', accessToken: '1613110712292812|k9j4h1sAQDpNCwcuZXKp_I1SKu8'});
 	
 	/*
@@ -204,8 +205,7 @@ angular.module('starter.controllers', ['ngOpenFB'])
     $scope.isExpanded = true;
     $scope.$parent.setExpanded(true);
     $scope.$parent.setHeaderFab('right');
-		
-	//console.log(JSON.stringify( ngFB);
+			
 	
 
     $timeout(function() {
