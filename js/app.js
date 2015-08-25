@@ -10,25 +10,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
 	
 	$ionicPlatform.APPFBID = '1613110712292812';
 	$ionicPlatform.STATICTOKEN = '1613110712292812|k9j4h1sAQDpNCwcuZXKp_I1SKu8';
-	$ionicPlatform.PAGEID = '342778329168021'; //150117738356335
-	$ionicPlatform.TIMEREFRESH = 10; //min * 60
+	$ionicPlatform.PAGEID = '158259371219'; //150117738356335
+	$ionicPlatform.TIMEREFRESH = 15*60; //min= n * 60
 	
     $ionicPlatform.ready(function() {
 						
 		//ABILITIAMO L'APP AL FUNZIONAMENTO IN BACKGROUND				
-		// Enable background mode		
-		
+		// Enable background mode				
 		cordova.plugins.backgroundMode.enable();
-		cordova.plugins.backgroundMode.configure({ silent: true });				
-		
+		//cordova.plugins.backgroundMode.configure({ silent: true });		
+				
 		//check nuove notizie
 		backgrdNotification.backgrdCheckOnFb();
 		
 		//Pulisco le notifiche all'apertura
 		backgrdNotification.backgrdClearNot();	
+		
+		cordova.plugins.backgroundMode.onfailure = function(errorCode) {alert('errore')};
 
 		//Chiamo subito il metodo per issue primo avvio
-		cordova.plugins.backgroundMode.onactivate();
+		//cordova.plugins.backgroundMode.ondeactivate();
 					
 		//Nascondo splash screen
 		navigator.splashscreen.hide();	
@@ -51,26 +52,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
     this.backgrdClearNot = function() {		
 		cordova.plugins.backgroundMode.ondeactivate = function() {			
 				cordova.plugins.notification.local.clearAll(function() {
-					console.log("cleared");
-					//alert('ciao');
+					console.log("cleared");			
+					//alert('test');
 				}, this);
 			}
         }
  
-    this.backgrdCheckOnFb = function() {
-		
-            cordova.plugins.backgroundMode.onactivate = function() {						
-				cordova.plugins.backgroundMode.configure({ silent: true });
-				cordova.plugins.notification.local.schedule({title: "test!",text: "debug", led: "E8D032"});
-							
+    this.backgrdCheckOnFb = function() {	
+		ngFB.init({appId: $ionicPlatform.APPFBID, accessToken: $ionicPlatform.STATICTOKEN});
+		cordova.plugins.backgroundMode.onactivate = function() {
+			//if (cordova.plugins.backgroundMode.isActive()) { 
+				cordova.plugins.backgroundMode.configure({ silent: true });				
+				//cordova.plugins.notification.local.schedule({id:1, title: "test!",text: "debug", led: "E8D032"});				
 				 var delayedUpdate = function() {			 					
-					$timeout(function() {                   
+					setTimeout(function () {                   
 						
-						//preleviamo l'ultimo post da FB
-						ngFB.init({appId: $ionicPlatform.APPFBID, accessToken: $ionicPlatform.STATICTOKEN});
-						
+						//preleviamo l'ultimo post da FB										
 						var lastId = new Object();
-						
+						//cordova.plugins.notification.local.schedule({id:1, title: "test!",text: "debug", led: "E8D032"});
 						ngFB.api({
 							method: 'GET',											
 							path: '/'+ $ionicPlatform.PAGEID +'/posts/',					
@@ -85,13 +84,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
 
 								//Notifichiamo che c'è un nuovo post
 								//window.localStorage.setItem('LASTPOSTID','749846598546');
+								//cordova.plugins.notification.local.schedule({title: "test!" ,text: "debug\n"+ lastId +'\n'+ window.localStorage.getItem('LASTPOSTID') , led: "E8D032"});								
 								
 								if (lastId != window.localStorage.getItem('LASTPOSTID') ) {
 									window.localStorage.setItem('LASTPOSTID',lastId);
-									
-																	
+																										
 									cordova.plugins.notification.local.schedule({
-										id: 1,
+										id: 2,
 										title: "Ci sono novità alla Jumping!",
 										text: lastMsg,
 										led: "E8D032"
@@ -105,14 +104,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
 						});
 						
 						//Richiamiamo la funzione ciclimamente ogni 30 minuti
-						this.delayedUpdate();         
+						delayedUpdate();         
 					}, $ionicPlatform.TIMEREFRESH*1000);
 				};
 					
 				delayedUpdate(); 
 			}
-        }
-  
+        //}
+	}
 })
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {

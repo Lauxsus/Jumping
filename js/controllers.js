@@ -112,14 +112,14 @@ angular.module('starter.controllers', ['ngOpenFB'])
 
                 ngFB.api({
                     method: 'GET',
-                    path: '/150117738356335/posts/',
+                    path: '/158259371219/posts/',
 					params: {
 						fields: 'message,created_time,comments,likes'
-						,limit: '10'						
+						,limit: '20'						
 					}	
                 }).then(
-                    function(posts) {                        
-                        $scope.posts = posts.data;													
+                    function(posts) {               						
+                        $scope.posts = posts.data;													                        
 						//console.log(JSON.stringify($scope.posts));
 						
                     },
@@ -212,9 +212,8 @@ angular.module('starter.controllers', ['ngOpenFB'])
         ionicMaterialMotion.fadeSlideIn({
             selector: '.animate-fade-slide-in .item'
         });
-    }, 200);
-	
-
+    }, 200);	 
+  
 	 $scope.showPopup = function() {
 		  $scope.data = {}
 
