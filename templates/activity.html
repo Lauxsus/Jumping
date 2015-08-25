@@ -1,13 +1,13 @@
 <ion-view view-title="Jumping News">
-    <ion-content ng-class="{expanded:isExpanded}" class="animate-fade-slide-in activityMargin">	
-		<ion-list collection-repeat="post in posts" item-height="post.message.length>80 ? 130 : 110" >
+	<ion-content ng-class="{expanded:isExpanded}" class="animate-fade-slide-in activityMargin">
+		<ion-list collection-repeat="post in  posts" item-height="post.message.length>80 ? 130 : 110" >
 			<ion-item class="item card-item"  >                
 				<div ng-click="showPopup()"  class="card"> 
 					<div  class="item item-text-wrap">						
 						{{post.message | limitTo:120}}...
 						<div class="card-footer text-right">
 							<i class="icon ion-chatbubble positive-900"> {{!post.likes.data.length ? 0 : post.likes.data.length}}</i> 
-							<i class="icon ion-heart assertive-900"></i> {{!post.comments.data.length ? 0 : post.comments.data.length}}
+							<i class="icon ion-heart assertive-900"></i> {{!post.comments.data.length ? 0 : post.comments.data.length}} 
 							<div class="pull-left">
 								<i class="icon ion-clock"></i> {{post.created_time | date:"longDate"}}
 							</div>
