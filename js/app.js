@@ -10,8 +10,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
 	
 	$ionicPlatform.APPFBID = '1613110712292812';
 	$ionicPlatform.STATICTOKEN = '1613110712292812|k9j4h1sAQDpNCwcuZXKp_I1SKu8';
-	$ionicPlatform.PAGEID = '158259371219'; //150117738356335
-	$ionicPlatform.TIMEREFRESH = 15*60; //min= n * 60
+	$ionicPlatform.PAGEID = '150117738356335';
+	$ionicPlatform.TIMEREFRESH = 30*60; //min= n * 60
 	
     $ionicPlatform.ready(function() {
 						
@@ -46,7 +46,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
 		
     });
 })
-
+	
 .service('backgrdNotification', function($ionicPlatform, $timeout, ngFB) {
   
     this.backgrdClearNot = function() {		

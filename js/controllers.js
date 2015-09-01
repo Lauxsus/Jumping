@@ -93,20 +93,6 @@ angular.module('starter.controllers', ['ngOpenFB'])
 	
 	ngFB.init({appId: '1613110712292812', accessToken: '1613110712292812|k9j4h1sAQDpNCwcuZXKp_I1SKu8'});
 	
-	/*
-	$scope.loginFB = function() {		
-                ngFB.login({scope: 'email,publish_actions, user_likes'}).then( 
-                    function(response) {
-                        alert('Facebook login succeeded, got access token: ' + response.authResponse.accessToken);						
-						$scope.fbtoken=response.authResponse.accessToken;
-						$scope.getInfoFB();
-                    },
-                    function(error) {
-                        alert('Facebook login failed: ' + JSON.stringify(error));
-                    }
-					
-					);
-    }*/
 		
 	$scope.getInfoFB = function() {		
 
@@ -114,8 +100,8 @@ angular.module('starter.controllers', ['ngOpenFB'])
                     method: 'GET',
                     path: '/150117738356335/posts/',
 					params: {
-						fields: 'message,created_time,comments,likes'
-						,limit: '20'						
+						fields: 'message,created_time,comments,likes,full_picture'
+						,limit: '30'						
 					}	
                 }).then(
                     function(posts) {               						
@@ -126,14 +112,6 @@ angular.module('starter.controllers', ['ngOpenFB'])
                     errorHandler);
     }
 	
-	
-	$scope.revokeFB = function() {				
-                ngFB.revokePermissions().then(
-                    function() {
-                        alert('Permissions revoked');
-                    },
-                    errorHandler);
-    }
 	
 	 function errorHandler(error) {				
                 alert('Err: ' + error.message);
