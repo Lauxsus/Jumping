@@ -112,7 +112,7 @@ angular.module('starter.controllers', ['ngOpenFB'])
 
                 ngFB.api({
                     method: 'GET',
-                    path: '/158259371219/posts/',
+                    path: '/150117738356335/posts/',
 					params: {
 						fields: 'message,created_time,comments,likes'
 						,limit: '20'						
