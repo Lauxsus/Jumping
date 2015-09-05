@@ -6,12 +6,12 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'ionMdInput','ngOpenFB', 'ngCordova'])
 
-.run(function($ionicPlatform, ngFB, $timeout, backgrdNotification, $rootScope,$timeout, ionicMaterialMotion, ionicMaterialInk) {
+.run(function($ionicPlatform, ngFB, $timeout, backgrdNotification, $rootScope, $timeout, ionicMaterialMotion, ionicMaterialInk, $cordovaSplashscreen, $cordovaNetwork) {
 	
 	$ionicPlatform.APPFBID = '1613110712292812';
 	$ionicPlatform.STATICTOKEN = '1613110712292812|k9j4h1sAQDpNCwcuZXKp_I1SKu8';
-	$ionicPlatform.PAGEID = '342778329168021';//'150117738356335';
-	$ionicPlatform.TIMEREFRESH = 60; //min= n * 60
+	$ionicPlatform.PAGEID = '116541041773507';//'150117738356335';
+	$ionicPlatform.TIMEREFRESH = 15*60; //min= n * 60
 	
     $ionicPlatform.ready(function() {
 						
@@ -32,7 +32,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
 		//cordova.plugins.backgroundMode.ondeactivate();
 					
 		//Nascondo splash screen
-		navigator.splashscreen.hide();	
+		$cordovaSplashscreen.hide();	
 		
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -44,7 +44,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
             StatusBar.styleDefault();
         }
         
-        document.addEventListener("resume", onResume, false);
+        document.addEventListener("resume", onResume, false);                
+                
+        //alert($cordovaNetwork.getNetwork());
+
 		
     });
     
@@ -60,6 +63,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
         
         $rootScope.getInfoFB();
     }
+      
 })
 	
 .service('backgrdNotification', function($ionicPlatform, $timeout, ngFB) {
