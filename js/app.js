@@ -6,12 +6,12 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'ionMdInput','ngOpenFB'])
 
-.run(function($ionicPlatform, ngFB, $timeout, backgrdNotification) {
+.run(function($ionicPlatform, ngFB, $timeout, backgrdNotification, $rootScope,$timeout, ionicMaterialMotion, ionicMaterialInk) {
 	
 	$ionicPlatform.APPFBID = '1613110712292812';
 	$ionicPlatform.STATICTOKEN = '1613110712292812|k9j4h1sAQDpNCwcuZXKp_I1SKu8';
-	$ionicPlatform.PAGEID = '150117738356335';
-	$ionicPlatform.TIMEREFRESH = 30*60; //min= n * 60
+	$ionicPlatform.PAGEID = '342778329168021';//'150117738356335';
+	$ionicPlatform.TIMEREFRESH = 60; //min= n * 60
 	
     $ionicPlatform.ready(function() {
 						
@@ -43,8 +43,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
+        
+        document.addEventListener("resume", onResume, false);
 		
     });
+    
+    function onResume() {
+        
+        $timeout(function() {
+            ionicMaterialMotion.fadeSlideIn({
+                selector: '.animate-fade-slide-in .item'
+            });
+        }, 200);
+        
+        ionicMaterialInk.displayEffect();
+        
+        $rootScope.getInfoFB();
+    }
 })
 	
 .service('backgrdNotification', function($ionicPlatform, $timeout, ngFB) {

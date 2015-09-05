@@ -3,7 +3,10 @@
 
 angular.module('starter.controllers', ['ngOpenFB'])
 
-.controller('AppCtrl', function($scope,$rootScope, $ionicModal, $ionicPopover, $timeout, ngFB) {
+.controller('AppCtrl', function($scope,$rootScope, $ionicModal, $ionicPopover, $timeout, ngFB, $ionicPlatform) {
+    
+    
+    
     // Form data for the login modal
     $scope.loginData = {};
     $scope.isExpanded = false;
@@ -91,14 +94,14 @@ angular.module('starter.controllers', ['ngOpenFB'])
 	//////////////////////////////////////////////
 	
 	
-	ngFB.init({appId: '1613110712292812', accessToken: '1613110712292812|k9j4h1sAQDpNCwcuZXKp_I1SKu8'});
+	ngFB.init({appId: $ionicPlatform.APPFBID, accessToken: $ionicPlatform.STATICTOKEN});
 	
 		
-	$scope.getInfoFB = function() {		
+    $rootScope.getInfoFB = function() {		
 
                 ngFB.api({
                     method: 'GET',
-                    path: '/150117738356335/posts/',
+                    path: '/'+$ionicPlatform.PAGEID+'/posts/',
 					params: {
 						fields: 'message,created_time,comments,likes,full_picture'
 						,limit: '30'						
