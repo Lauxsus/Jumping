@@ -10,15 +10,20 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
 	
 	$ionicPlatform.APPFBID = '1613110712292812';
 	$ionicPlatform.STATICTOKEN = '1613110712292812|k9j4h1sAQDpNCwcuZXKp_I1SKu8';
-	$ionicPlatform.PAGEID = '116541041773507';//'150117738356335';
+	$ionicPlatform.PAGEID = '158259371219';//'150117738356335';
 	$ionicPlatform.TIMEREFRESH = 15*60; //min= n * 60
 	
     $ionicPlatform.ready(function() {
 						
 		//ABILITIAMO L'APP AL FUNZIONAMENTO IN BACKGROUND				
-		// Enable background mode				
-		cordova.plugins.backgroundMode.enable();
-		//cordova.plugins.backgroundMode.configure({ silent: true });		
+		// Enable background mode						
+		cordova.plugins.backgroundMode.setDefaults({ 
+            silent: true, 
+            title:  'Jumping', 
+            text:   'L\' app funzionerà in background',
+            ticker: 'Jumping' 
+        });
+        cordova.plugins.backgroundMode.enable();
 				
 		//check nuove notizie
 		backgrdNotification.backgrdCheckOnFb();
