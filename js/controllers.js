@@ -3,7 +3,7 @@
 
 angular.module('starter.controllers', ['ngOpenFB'])
 
-.controller('AppCtrl', function($scope,$rootScope, $ionicModal, $ionicPopover, $timeout, ngFB, $ionicPlatform) {
+.controller('AppCtrl', function($scope,$rootScope, $ionicModal, $ionicPopover, $timeout, ngFB, $ionicPlatform, $ionicLoading) {
     
     
     
@@ -12,6 +12,7 @@ angular.module('starter.controllers', ['ngOpenFB'])
     $scope.isExpanded = false;
     $scope.hasHeaderFabLeft = false;
     $scope.hasHeaderFabRight = false;
+       
 
     var navIcons = document.getElementsByClassName('ion-navicon');
     for (var i = 0; i < navIcons.length; i++) {
@@ -92,6 +93,11 @@ angular.module('starter.controllers', ['ngOpenFB'])
 	////////////////////////////////////////////////
 	//            FACEBOOK          ///////////////
 	//////////////////////////////////////////////
+    
+    $ionicLoading.show({
+        template: '<ion-spinner></ion-spinner>',
+        noBackdrop: true
+      });
 	
 	
 	ngFB.init({appId: $ionicPlatform.APPFBID, accessToken: $ionicPlatform.STATICTOKEN});
@@ -108,8 +114,9 @@ angular.module('starter.controllers', ['ngOpenFB'])
 					}	
                 }).then(
                     function(posts) {               						
-                        $scope.posts = posts.data;													                        
-						//console.log(JSON.stringify($scope.posts));
+                        $scope.posts = posts.data;                       
+                        $ionicLoading.hide();
+    					//console.log(JSON.stringify($scope.posts));
 						
                     },
                     errorHandler);
@@ -183,9 +190,9 @@ angular.module('starter.controllers', ['ngOpenFB'])
 .controller('ActivityCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicPopup, ngFB) {
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
-    $scope.isExpanded = true;
-    $scope.$parent.setExpanded(true);
-    $scope.$parent.setHeaderFab('right');
+    $scope.isExpanded = false;
+    $scope.$parent.setExpanded(false);
+    $scope.$parent.setHeaderFab(false);
 			
 	
 

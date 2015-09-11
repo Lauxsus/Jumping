@@ -27,12 +27,16 @@ p {
 
 /* Menu
 ==================================*/
-.menu .bar.bar-header.expanded {
+/*.menu .bar.bar-header.expanded {
     transition: all .5s ease-in-out;
-}
+}*/
 
 .menu-open .bar.bar-header.expanded {
     background-color: #222;
+}
+
+.menu-open .bar.bar-header h2{
+    color: #222;
 }
 
 .menu h2 {
@@ -50,6 +54,7 @@ p {
 .menu.menu-left * {
     font-weight: bold;
 }
+
 
 .menu-open .ion-navicon {
     transform: rotate(-360deg);
@@ -87,6 +92,7 @@ p {
 	-webkit-text-stroke-width: 1px;-webkit-text-stroke-color: #fff;
 	font-style: italic;
 	letter-spacing: -1px;
+    height: 64px
 }
 
 .jumping .title{
@@ -109,4 +115,8 @@ p {
 
 .viewActivity {
  background: #EEE !important;   
+}
+
+ion-nav-bar{
+    line-height: 46px;
 }

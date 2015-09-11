@@ -11,12 +11,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
 	$ionicPlatform.APPFBID = '1613110712292812';
 	$ionicPlatform.STATICTOKEN = '1613110712292812|k9j4h1sAQDpNCwcuZXKp_I1SKu8';
 	$ionicPlatform.PAGEID = '158259371219';//'150117738356335';
-	$ionicPlatform.TIMEREFRESH = 15*60; //min= n * 60
+	$ionicPlatform.TIMEREFRESH = 60*60; //min= n * 60
 	
     $ionicPlatform.ready(function() {
 						
-		//ABILITIAMO L'APP AL FUNZIONAMENTO IN BACKGROUND				
-		// Enable background mode						
+		//ABILITIAMO L'APP AL FUNZIONAMENTO IN BACKGROUND												
 		cordova.plugins.backgroundMode.setDefaults({ 
             silent: true, 
             title:  'Jumping', 
@@ -164,8 +163,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
                 controller: 'ActivityCtrl'
             },
             'fabContent': {
-                template: '<button id="fab-activity" class="button button-fab button-fab-top-right expanded button-positive-900 flap"><i class="icon ion-clipboard"></i></button>',
-				//template: '',
+                //template: '<button id="fab-activity" class="button button-fab button-fab-top-right expanded button-positive-900 flap"><i class="icon ion-clipboard"></i></button>',                
+                template: '',
                 controller: function ($timeout) {
                     $timeout(function () {
                         document.getElementById('fab-activity').classList.toggle('on');
